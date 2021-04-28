@@ -59,6 +59,7 @@ function display(){
     var num2="";
     let saveOp="";
     let ans=0;
+    var dotChecker = false;
 
     window.addEventListener('keydown',(event)=>{
         let opps=["/","*","+","-"];
@@ -121,14 +122,22 @@ function display(){
 
     digitBtns.forEach(digit=>{
         digit.addEventListener('click',()=>{
+           if(dotChecker && digit.textContent=="."){
+               return;
+           } 
             
-            
-            if(clickedOp && digit.textContent=="."){
-                return;
-            }
+            // if(clickedOp && digit.textContent=="."){
+            //     return;
+            // }
             if(zeroStart==true){
                 windowDisplay.textContent="";
                 zeroStart=false;
+            }
+
+
+
+            if(digit.textContent=="."){
+                dotChecker=true;
             }
             if(clickedOp){
                 windowDisplay.textContent+=digit.textContent;
@@ -138,6 +147,8 @@ function display(){
                 return;
             }
             
+            
+
             
             if(clickEqual){
                 windowDisplay.textContent="";
@@ -156,7 +167,8 @@ function display(){
 
     operators.forEach(operator=>{
         operator.addEventListener('click',()=>{
-            
+            dotChecker=false;
+
             zeroStart=true;
             if(clickedOp==false){
                 clickedOp=true; 
@@ -178,6 +190,7 @@ function display(){
 
     equalBtn.addEventListener('click',()=>{
         ans=0;
+        dotChecker=false;
         if(operate(num1,num2,saveOp)=="CAN'T DIVIDE BY ZERO"){
             windowDisplay.textContent="CAN'T ÷ BY 0";
             num1="";
